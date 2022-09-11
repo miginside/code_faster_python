@@ -1,34 +1,32 @@
 from collections import namedtuple
 
-STest = namedtuple('TEST', 'a b c')
-a = STest(a=1,b=2,c=3)
+MyNamedTuple = namedtuple('TEST', 'a b c')
+my_named_tuple = MyNamedTuple(a=1,b=2,c=3)
 
-class Test(object):
+class ClassWithSlots():
     __slots__ = ['a','b','c']
     def __init__(self, a, b, c):
         self.a=a
         self.b=b
         self.c=c
 
-b = Test(1,2,3)
-c = {'a':1, 'b':2, 'c':3}
-d = (1,2,3)
-e = [1,2,3]
-key = 2
+class_with_slots = ClassWithSlots(1,2,3)
+
+my_tuple = ('a','b','c')
 
 if __name__ == '__main__':
     from timeit import timeit
-    nrepeat = 100000
+    nrepeat = 10**5
 
     print("=== Definition ===\n")
     print("Define NamedTuple with a, b, c:")
     print(timeit("""\
-STest = namedtuple('TEST', 'a b c')""", """\
+MyNamedTuple = namedtuple('TEST', 'a b c')""", """\
 from collections import namedtuple""", number=nrepeat))
 
-    print("Define Class with a, b, c slots:")
+    print("Define Class with slots a, b, c:")
     print(timeit("""\
-class Test(object):
+class ClassWithSlots(object):
     __slots__ = ['a','b','c']
 def __init__(self, a, b, c):
     self.a=a
@@ -38,27 +36,33 @@ def __init__(self, a, b, c):
     print("Define Tuple with 3 values:")
     print(timeit("('a','b','c')", number=nrepeat))
 
+
     print("\n=== Instantiation ===\n")
+    nrepeat=10**7
 
     print("Instantiate NamedTuple with a, b, c:")
-    print(timeit("""a = STest(a=1,b=2,c=3)""", """from __main__ import STest""", number=nrepeat))
+    print(timeit("a = MyNamedTuple(a=1,b=2,c=3)", "from __main__ import MyNamedTuple", number=nrepeat))
 
-    print("Instantiate Class with a, b, c slots:")
-    print(timeit("""b = Test(1,2,3)""", """from __main__ import Test""", number=nrepeat))
+    print("Instantiate Class with slots a, b, c:")
+    print(timeit("b = ClassWithSlots(1,2,3)", "from __main__ import ClassWithSlots", number=nrepeat))
 
     print("Instantiate Tuple with 3 values:")
-    print(timeit("""c = (1,2,3)""", """from __main__ import Test""", number=nrepeat))
+    print(timeit("c = (1,2,3)", number=nrepeat))
+
 
     print("\n=== Read ===\n")
+    nrepeat=10**7
 
-    print("Access NamedTuple by name:")
-    print(timeit("z = a.c", "from __main__ import a"))
+    print("Access NamedTuple attribute by name:")
+    print(timeit("z = my_named_tuple.c", "from __main__ import my_named_tuple", number=nrepeat))
 
-    print("Access NamedTuple by index:")
-    print(timeit("z = a[2]", "from __main__ import a"))
+    print("Access NamedTuple attribute by index:")
+    print(timeit("z = my_named_tuple[2]", "from __main__ import my_named_tuple", number=nrepeat))
 
-    print("Access slots Class by name:")
-    print(timeit("z = b.c", "from __main__ import b"))
+    print("Access Class slots by name:")
+    print(timeit("z = class_with_slots.c", "from __main__ import class_with_slots", number=nrepeat))
 
     print("Access Tuple by index:")
-    print(timeit("z = d[2]", "from __main__ import d"))
+    print(timeit("z = my_tuple[2]", "from __main__ import my_tuple"))
+
+    print()
