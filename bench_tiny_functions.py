@@ -42,4 +42,3 @@ if __name__ == '__main__':
     print(f"call 2x inline function, loop={NLOOPS}:")
     t1 = timeit("bb()", "from __main__ import bb", number=NLOOPS)
     print(f"{t1} ({(t0-t1)/t0*100:.2f}% faster)\n")
-

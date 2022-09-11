@@ -66,3 +66,4 @@ def __init__(self, a, b, c):
     print(timeit("z = my_tuple[2]", "from __main__ import my_tuple"))
 
     print()
+    
