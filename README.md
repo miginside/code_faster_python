@@ -1,8 +1,9 @@
 # Code faster Python
-  * **data_structures.py**: compare speed between collections.namedtuple, class with slots and a bare tuple.
+  * **bench_data_structures.py**: compare speed between collections.namedtuple, class with slots and a bare tuple.
+  * **bench_tiny_functions.py**: assess speed impact of calling tiny functions
 
 
-## data_structures.py
+## bench_data_structures.py
 
 Results on an Intel(R) Core(TM) i7-1065G7 CPU @ 1.30GHz (4 cores):
 * Python 3.9:
@@ -35,4 +36,19 @@ Access Class slots by name:
 0.3994631000000002
 Access Tuple by index:
 0.0632085
+```
+
+## bench_tiny_functions.py
+
+Results on an Intel(R) Core(TM) i7-1065G7 CPU @ 1.30GHz (4 cores):
+* Python 3.9:
+```
+call tiny function, loop=1000:
+7.1489971
+call inline function, loop=1000:
+3.147498100000001 (55.97% faster)
+call 2x tiny function, loop=1000:
+13.2962043
+call 2x inline function, loop=1000:
+5.207785000000001 (60.83% faster)
 ```
