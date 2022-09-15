@@ -1,4 +1,5 @@
-
+import sys
+print(f"Python version: {sys.version}")
 
 def add(x, y):
     return x + y
@@ -24,6 +25,7 @@ def bb():
     for n in range(100000):
         x + n
         n + x
+
 
 if __name__ == '__main__':
     from timeit import timeit
